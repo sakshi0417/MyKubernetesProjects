@@ -1,0 +1,28 @@
+
+DIY Questions:
+1.Which of the following is not a network plugin supported by Kubernetes?a)calicob)flannelc)Weave Netd)None of the above
+2.Which of the following statements are True about TLS certificates? (choosemultiple options)
+a)certificates allow authentication between two parties
+b)certificates  do  not  provide  secure  communication  between  interacting parties
+c)certificate authority issues certificate to all parties involved
+d)TLS  certificates  not  only  provide  authentication  but  privacy  and  data integrity between 2 parties
+
+3. How to create a pod with an httpd container and set the label app=webserver on the pod?
+
+4. How to display all the labels created on the pod in the above question (Question 3)?
+
+5.Which of the following is not a type of service?
+a)ClusterIP
+b)Ingress
+c)NodePort
+d)LoadBalancer
+
+6.How to expose the webpod created in question 3 via NodePort service?
+
+7.Which of the following statement is false about services?
+a)Service acts as a single point of entry to a pod or to a group of pods.
+b)Service has immutable IP and port number
+c)Service is not dns resolved in kubernetes
+d)Service can be used to expose pod's internally as well as externally
+
+8.What is an endpoint of a service?

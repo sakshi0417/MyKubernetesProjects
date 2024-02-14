@@ -1,0 +1,152 @@
+kubectl get replicaset    #  we can also write as  short form --> kubectl get rs
+kubectl get replicationcontroller  -->  kubectl get rc
+cat rc.yaml
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: my-replication-controller
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: my-rc-container
+        image: nginx:1.7.9
+        ports:
+        - containerPort: 80
+
+- kubectl get po
+- kubectl create -f  rc.yaml
+- kubectl get rc
+-  kubectl get po
+-kubectl delete po (nameof pod) # just for check  is it cretated automatically or not 
+kubectl get po
+-kubectl delete rc (rc name)
+kubectl get rc,po
+
+# coomand for replcation set 
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: my-replicaset
+  labels:
+      app: nginx
+spec:
+  replicas: 3
+  selector:
+    matchExpressions:
+    - {key: app, operator: In, values: [nginx_1, nginx_2]}
+  template:
+    metadata:
+      name: nginx
+      labels:
+        app: nginx_2
+    spec:
+      containers:
+      - name: my-rscontainer
+        image: nginx:latest
+
+
+-- kubectl explain replicaset (just check for  version )
+-- cat rs.yaml
+
+-kubectl run testpod --image=nginx
+- kubectl get po --show-labels
+- kubectl label po testpod run- app=nginx_1
+- kubectl get po --show-labels
+-kubectl create -f  rs.yaml
+-kubectl get rs 
+-kubectl get po
+kubectl delete po (nameof pod)
+
+
+********************************************************************
+Daemonset(demostartion)
+kubectl delete -f rs.yaml
+kubectl get rs,rc,po
+sudo nano ds.yaml(daemonset short form ds)
+
+
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: my-daemonset
+spec:
+  template:
+    metadata:
+      labels:
+        app: fluentd
+    spec:
+      containers:
+      - name: fluentd
+        image: gcr.io/your-project/your-fluentd-image:latest
+  selector:
+    matchLabels:
+      app: fluentd
+
+
+
+if always one pod per node so no replicaset is required  here 
+
+kubectl get nodes
+kubectl create -f  ds.yaml
+kubectl get ds
+kubectl get ds,po
+kubectl delete ds (daemon set name)
+
+
+**********************************************************************************************************************
+cat deploy.yml
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx_deploy
+  template:
+    metadata:
+      labels:
+        app: nginx_deploy
+    spec:
+      containers:
+      - name: nginxdeploy-container
+        image: nginx:1.17
+        ports:
+        - containerPort: 80
+
+
+--- kubectl get deploy,po
+--  kubectl  create -f  deploy.yml
+-- kubectl get deployment
+--kubectl get rs
+-- kubectl get po
+-- kubectl delete (pod name)
+--kubectl  delete -f  deploy.yml
+-- kubectl get deploy,rs,po
+-- kubectl  create deploy testdeploynew --image=httpd --replicas=2
+-- kubectl get deploy,rs,po
+--kubectl scale deploy testdeploynew --replicas=4  (upscaling)
+-- kubectl get deploy,rs,po
+--kubectl scale deploy testdeploynew --replicas=1 (downscalling)
+-- kubectl get deploy,rs,po
+--kubectl delete  deploy testdeploynew  (to delete the deployment)
+---- kubectl get deploy,rs,po
+
+
+*********************************************************************************************************************************************
+ 
+kubectl get deploy
+ kubectl  create deploy testdeploylatest --image=nginx:1.17
+kubectl get deploy,rs,po
+kubectl describe po ( pod name ) ## just for chicking the image 
+kubectl  set  image  deploy  testdeploylatest nginx=nginx:1.18 --record=true
+kubectl get deploy,rs,po
+kubectl describe po ( pod name )
+kubectl rollout history  deploy testdeploylatest

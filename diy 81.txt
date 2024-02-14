@@ -1,0 +1,46 @@
+Day 81
+DIY
+DIY Questions:
+
+1.How to create a replicaset with 3 replicas?
+Answer:
+kubectl create replicaset my-replicaset --replicas=3 --image=nginx:latest
+
+2.How to create a deployment named testdeploy with 2 replicas and container image as nginx:1.17?
+Answer:
+kubectl create deployment testdeploy --replicas=2 --image=nginx:1.17
+
+3.Expose the above-created deployment using the NodePort Service, name the service as testsvc
+Answer:
+kubectl expose deployment testdeploy --name=testsvc --type=NodePort --port=80
+
+4.How many total endpoints will be there for testsvc?
+a)0
+b)1
+c)2
+d)3
+Answer:
+c)2
+The number of total endpoints for "testsvc" would be 2. One endpoint for each replica of the "testdeploy" deployment.
+
+
+5.How to manually Scale down the testdeploy to 1 replica?
+Answer:
+To manually scale down the "testdeploy" deployment to 1 replica, you can use the kubectl scale command:
+
+kubectl scale deployment testdeploy --replicas=1
+
+
+6.How  to  upgrade  the testdeploy  first  to  image  nginx:1.18  and  then  to nginx:1.19?
+Answer:
+kubectl set image deployment/testdeploy nginx=nginx:1.18
+kubectl set image deployment/testdeploy nginx=nginx:1.19
+
+
+7.How to rollback testdeploy from current version (nginx:1.19) to old version (nginx:1.17)?
+Answer:
+kubectl rollback deployment testdeploy 1
+
+8.How  to  create  an  autoscaler  (HPA)  for  testdeploy  with  a  CPU  threshold  of 50%    and minimum pods as 1, and the maximum pod's as 3?
+Answer:
+kubectl autoscale deployment testdeploy --min=1 --max=3 --cpu-percent=50

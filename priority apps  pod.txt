@@ -1,0 +1,29 @@
+apiVersion: scheduling.k8s.io/v1
+kind: PriorityClass
+metadata:
+     name: high-priority-apps
+value: 1000000
+preparationpolicy: preempLowerPriority
+globalDefault: false
+description: "Mission Critical apps."
+---
+apiVersion: v1
+kind: Pod
+metadata:
+   name: nginx
+   labels:
+       env: dev
+spec:
+   containers:
+   - name: web
+      image: nginx:latest
+      imagePullPolicy: IfNotPresent
+      resources:
+          requests:
+             memory: "3000Mi"
+             cpu: "1500m"
+          limits:
+            memory: "4000Mi"
+            cpu: "1500m"
+   priorityClassName: high-priority-apps
+   

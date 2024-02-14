@@ -1,0 +1,62 @@
+Day 79
+DIYSolution
+DIY Questions
+
+1.Which of the following is not a Kubernetes controller?a)Services
+b)deployment
+c)ingress
+d)statefulset
+solution:
+a)Services
+
+2.Which of the following controller is mainly used for stateful applications?
+a)deployment
+b)replicaset
+c)statefulset
+d)replication controller
+solution:
+c)statefulset
+
+3.Which controller will always create one pod per node?
+a)replicaset
+b)daemonset
+c)statefulset
+d)replication controller
+solution:
+b)daemonset
+
+4.Which of the following statement is True about controllers?
+a)Controllers ensure the current state of the cluster matches the desired state
+b)Controllers manage the pods on the basis of labels and selectors
+c)Controllers can be used to upscale or downscale the number of application pods
+d)All of the Above
+solution:
+d)All of the Above
+
+5.Name the health checks provided by Kubernetes?
+Kubernetes provides two types of health checks: liveness probes and readiness probes. Liveness probes are used to determine if a container is still running, while readiness probes are used to determine if a container is ready to accept traffic.
+
+
+6.Which of the following is not a value of Restart Policy in the pod spec file?
+a)Always
+b)on demand
+c)never
+d)on failure
+solution:
+b)on demand
+
+7.Which of the statement is true about schedulers?
+a)Scheduler is a Kubernetes component that runs on the master node
+b)Scheduler finds the newly created pods and assigns them to the most suitable node.
+c)Scheduler uses filtering and scoring mechanisms for scheduling a pod
+d)All of the above
+solution:
+d)All of the above
+
+8.Which of the following statements are False about Pod Priority?
+a)Pod priority defines the level of importance a pod has in the cluster
+b)Pod priority directly affects the scheduling order and preemption of pods on nodes
+c)Pod priorities are assigned using a resource called as priority class
+d)None of the above
+solution:
+d)None of the above

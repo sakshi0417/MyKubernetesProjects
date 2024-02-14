@@ -1,0 +1,69 @@
+Day 80 
+DIY
+DIY Questions:
+1.Which of the following is not a scheduling mechanism?
+a)node selector
+b)pod affinity
+c)node affinity
+d)node anti-affinity
+Answer:
+d)node anti-affinity
+
+2.Which of the following is a QoS class in Kubernetes (select multiple options)?
+a)best effort
+b)non-guaranteed
+c)burstable
+d)best support
+Answer:
+a)best effort
+c)burstable
+
+3.Write a command to taint a worker node using the following key value pair and effect “app=webserver:NoSchedule" ?
+Answer:
+kubectl taint nodes <node-name> app=webserver:NoSchedule
+
+
+4.How to create a pod on a tainted node using toleration?
+Answer:
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod
+spec:
+  tolerations:
+  - key: "app"
+    operator: "Equal"
+    value: "webserver"
+    effect: "NoSchedule"
+  containers:
+  - name: my-container
+    image: nginx:latest
+
+5.Which of the following statement is True about taints
+a)taints are always applied on nodes
+b)taints are used to stop scheduling of pods on a worker node
+c)Pods can be scheduled on a tainted node using tolerations
+d)All of the above
+Answer:
+d)All of the above
+
+6. Which of the following is not an effect in taint?
+a)NoSchedule
+b)NoExecute
+c)NoTerminate
+d)PreferredNoSchedule
+Answer:
+c)NoTerminate
+
+7. How to create a pod on a node that is tagged using label app=frontend?
+Answer:
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod
+spec:
+  nodeSelector:
+    app: frontend
+  containers:
+  - name: my-container
+    image: nginx:latest

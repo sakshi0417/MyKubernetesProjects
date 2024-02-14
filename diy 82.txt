@@ -1,0 +1,105 @@
+Day 82
+DIY
+DIY Questions
+ 1.How to deploy redis application provided pods are running on each node of the cluster?
+Answer:
+
+
+2.Which of the following is not an access mode for PV
+a)Read-write Once
+b)Read-write Many
+c)Read only Many
+d)Read only Once 
+Answer:
+d)Read only Once 
+
+3.Which of the following statement is correct about persistent volumes?
+a)PV can be utilized as cluster resource
+b)Kubernetes binds the PVC to the best possible PV
+c)PV provides stability required for stateful and distributed applications
+d)All of the above
+Answer:
+d)All of the above
+
+4.Persistent storage is best suited for what type of applications?
+a)Stateful applications 
+b)Stateless applications
+c)Both a and b
+d)None of the above
+Answer:
+a)Stateful applications
+
+5.How to create a PV of size 1 GB using standard storage class?
+Answer:
+kubectl create -f - <<EOF
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: my-pv
+spec:
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 1Gi
+  storageClassName: standard
+  persistentVolumeReclaimPolicy: Recycle
+EOF
+
+or
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: my-pv
+spec:
+  capacity:
+    storage: 1Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: standard
+  hostPath:
+    path: /data/my-pv
+
+
+6.How to create a pod with nginx container and mount the above-created volume in the container on path /var/www/html?
+Answer:
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod
+spec:
+  containers:
+    - name: nginx-container
+      image: nginx:latest
+      volumeMounts:
+        - name: my-volume
+          mountPath: /var/www/html
+  volumes:
+    - name: my-volume
+      persistentVolumeClaim:
+        claimName: my-pvc
+
+OR 
+To create a pod with an Nginx container and mount the above-created volume in the container on path /var/www/html, you can use the following command:
+
+kubectl create -f - <<EOF
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod
+spec:
+  containers:
+  - name: nginx
+    image: nginx:latest
+    volumeMounts:
+    - name: my-pv
+      mountPath: /var/www/html
+  volumes:
+  - name: my-pv
+    persistentVolumeClaim:
+      claimName: my-pvc
+EOF
+This will create a pod with an Nginx container that mounts the PV named my-pv to the container on path /var/www/html.
+
+Once the pod is running, you can access the Nginx website at the IP address of the pod.
